@@ -111,9 +111,16 @@
 
 <style>
   label {
-    font-size: 2em;
+    font-size: 4em;
     font-weight: 600;
     -webkit-text-stroke: 1px white;
+  }
+  input {
+    font-size: 2em;
+  }
+  input[type="radio"] {
+    width: 1.5em;
+    height: 1.5em;
   }
   .team0-wrap {
     position: absolute;
