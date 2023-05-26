@@ -99,7 +99,7 @@
         <FocusRadial></FocusRadial>
       {/if}
     </div>
-    {#if stat === true}
+    {#if stat}
       <div class="end-stats" transition:fade={{duration:3000}}>
         <StatsScreen bind:seriesLength={seriesLength} bind:counter={counter}></StatsScreen>
       </div>

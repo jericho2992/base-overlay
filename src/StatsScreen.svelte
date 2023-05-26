@@ -133,11 +133,13 @@
         align-items: center;
     }
     th, td {
-        font-size: 2em;
+        font-size: 1.6em;
         padding: 0.15em 0.25em;
-        min-width: 6em;
-        max-width: 6em;
+        min-width: 5.7em;
+        width: 5.7em;
+        max-width: 5.7em;
         margin: 0;
+        overflow-wrap: break-word;
     }
     
 </style>
