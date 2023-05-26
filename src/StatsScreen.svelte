@@ -132,14 +132,28 @@
         justify-content: flex-start;
         align-items: center;
     }
+    h1 {
+        margin-bottom: 1.25em;
+    }
+    table {
+        min-width: 85em;
+        border-top: 1px black solid;
+    }
     th, td {
         font-size: 1.6em;
-        padding: 0.15em 0.25em;
-        min-width: 5.7em;
-        width: 5.7em;
-        max-width: 5.7em;
+        padding: 0.5em 0.25em;
         margin: 0;
         overflow-wrap: break-word;
+        min-width: 5.75em;
+        max-width: 5.75em;
+        width: 5.75em;
     }
-    
+    tr {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        width: 100%;
+        min-width: 100%;
+    }
 </style>
