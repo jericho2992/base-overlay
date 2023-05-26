@@ -152,7 +152,7 @@
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
-        justify-content: space-between;
+        justify-content: space-around;
         width: 100%;
         min-width: 100%;
     }
