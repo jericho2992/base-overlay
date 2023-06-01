@@ -170,6 +170,11 @@ $: if($matchCreated?.id) {
         flex-direction: column;
         flex-wrap: nowrap;
     }
+    .right {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
     .center {
         background-color: rgb(30, 30, 30);
         color: white;
