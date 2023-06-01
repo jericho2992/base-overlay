@@ -1,13 +1,14 @@
 <script>
   import { socket } from "./lib/socket.js";  
-  import { targetPlayer, gameEnd, matchCreated } from "./lib/processor.js";
-  import { fade } from "svelte/transition";
+  import { targetPlayer, gameEnd, matchCreated, goal, assist, replayEnd } from "./lib/processor.js";
+  import { fade, fly } from "svelte/transition";
 
   import TeamPanel from "./TeamPanel.svelte";
   import Scoreboard from "./Scoreboard.svelte";
   import FocusPanel from "./FocusPanel.svelte";
   import FocusRadial from "./FocusRadial.svelte";
   import StatsScreen from "./StatsScreen.svelte";
+  import GoalPanel from "./GoalPanel.svelte";
 
   
   let setup = true;
@@ -16,6 +17,23 @@
   let seriesLength;
   let stat = false;
   let counter=0;
+  let goalPanel=false;
+  let scorer;
+  let assister="";
+  let speed;
+
+  $: if($goal?.scorer) {
+    goalPanel = true;
+    scorer = $goal.scorer;
+    assister = $goal.assister;
+    speed = $goal.speed;
+  }
+
+
+
+  $: if($replayEnd?.end === true) {
+    goalPanel = false;
+  }
 
   let lastReportedMatch = 0;
   $: if($gameEnd?.match != 0) {
@@ -90,18 +108,23 @@
       <Scoreboard logo1={logo1} logo2={logo2} seriesLength={seriesLength}></Scoreboard>
     </div>
     <div class="focus-wrap">
-      {#if $targetPlayer?.name}
+      {#if $targetPlayer?.name && !goalPanel}
         <FocusPanel></FocusPanel>
       {/if}
     </div>
     <div class="radial-wrap">
-      {#if $targetPlayer?.name}
+      {#if $targetPlayer?.name && !goalPanel}
         <FocusRadial></FocusRadial>
       {/if}
     </div>
     {#if stat}
       <div class="end-stats" transition:fade={{duration:3000}}>
         <StatsScreen bind:seriesLength={seriesLength} bind:counter={counter}></StatsScreen>
+      </div>
+    {/if}
+    {#if goalPanel}
+      <div class="goal-wrap" transition:fly={{ duration:750, y:100}}>        
+        <GoalPanel scorer={scorer} assist={assister} speed={speed}></GoalPanel>         
       </div>
     {/if}
     
@@ -146,5 +169,10 @@
     position: absolute;
     left: 50%;
     transform: translate(-50%);
+  }
+  .goal-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 </style>

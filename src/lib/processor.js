@@ -18,6 +18,17 @@ export const statEvent = derived(socketMessageStore, ($msg, set) => {
     }
 });
 
+export const replayEnd = derived(socketMessageStore, ($msg, set) => {
+    if(!$msg) return;
+
+    if($msg.event === "game:replay_end") {
+        set({end: true});
+        setTimeout(()=>{
+            set({end: false});
+        }, 1000);
+    }
+});
+
 export const gameEnd = derived(socketMessageStore, ($msg, set) => {
     if(!$msg) return;
 
@@ -40,6 +51,27 @@ export const matchCreated = derived(socketMessageStore, ($msg, set) => {
         set({id: matchID});
     } else {
         set({});
+    }
+});
+
+export const goal = derived(socketMessageStore, ($msg, set) => {
+    if(!$msg) return;
+
+    if($msg.event === "game:goal_scored")
+    {
+        const scorer = $msg.data.scorer.name;
+        const team = $msg.data.scorer.teamnum;
+        const speed = Math.round($msg.data.goalspeed);
+        const assister = $msg.data.assister.name;
+        set({
+            scorer: scorer,
+            team: team,
+            assister: assister,
+            speed: speed
+        });
+        setTimeout(() => {
+            set({});
+        }, 1000);
     }
 });
 
@@ -86,7 +118,9 @@ export const assist = derived(statEvent, ($stat, set) => {
 
     if($stat.event_name === "Assist") {
         const buddy = $stat.main_target.id;
-        set({buddy: buddy});
+        const name = $stat.main_target.name;
+        set({buddy: buddy, 
+        name: name});
         setTimeout(()=>{
             set({});
         }, 1000);
