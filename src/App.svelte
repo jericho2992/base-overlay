@@ -45,7 +45,9 @@
 
   let lastCreatedMatch = 0;
   $: if($matchCreated?.id) {
+    console.log("created successfully");
     if($matchCreated.id != lastCreatedMatch) {
+      console.log("stat update");
       lastCreatedMatch = $matchCreated.id;
       counter++;
       stat = false;
