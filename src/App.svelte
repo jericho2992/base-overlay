@@ -1,6 +1,6 @@
 <script>
   import { socket } from "./lib/socket.js";  
-  import { targetPlayer, gameEnd, matchCreated, goal, assist, replayEnd } from "./lib/processor.js";
+  import { targetPlayer, gameEnd, matchCreated, goal, assist, replayEnd, matchDestroyed } from "./lib/processor.js";
   import { fade, fly } from "svelte/transition";
 
   import TeamPanel from "./TeamPanel.svelte";
@@ -16,7 +16,7 @@
   let logo2;
   let seriesLength;
   let stat = false;
-  let counter=0;
+  let counter=1;
   let goalPanel=false;
   let scorer;
   let assister="";
@@ -44,14 +44,11 @@
   }
 
   let lastCreatedMatch = 0;
-  $: if($matchCreated?.id) {
-    console.log("created successfully");
-    if($matchCreated.id != lastCreatedMatch) {
-      console.log("stat update");
-      lastCreatedMatch = $matchCreated.id;
-      counter++;
-      stat = false;
-    }
+  $: if($matchDestroyed?.destroyed) {
+      if($matchDestroyed.destroyed === true) {
+        counter++;
+        stat = false;
+      }
   }
 
   function completeSetup(event) {

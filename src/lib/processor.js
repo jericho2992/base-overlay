@@ -10,6 +10,19 @@ export const updateState = derived(socketMessageStore, ($msg, set) => {
 
 });
 
+export const matchDestroyed = derived(socketMessageStore, ($msg, set) => {
+    if(!$msg) return;
+
+    if($msg.event === "game:match_destroyed") {
+        set({destroyed: true});
+        setTimeout(()=>{
+            set({destroyed: false});
+        }, 1000);
+    } else {
+        set({destroyed: false});
+    }
+});
+
 export const statEvent = derived(socketMessageStore, ($msg, set) => {
     if(!$msg) return;
 

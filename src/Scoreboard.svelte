@@ -7,12 +7,13 @@
     import { scores } from "./lib/processor";
     import { isOT } from "./lib/processor";
     import { matchCreated } from "./lib/processor";
+    import { matchDestroyed } from "./lib/processor";
 
     export let logo1;
     export let logo2;
     export let seriesLength;
 
-    let counter = 0;
+    let counter = 1;
     let lastReportedMatch="11";
     let lastReportedWinner;
     let lastCreatedMatch = 0;
@@ -49,9 +50,8 @@ $: if($gameEnd?.match != 0) {
     }   
 }
 
-$: if($matchCreated?.id) {
-    if($matchCreated.id != lastCreatedMatch) {
-        lastCreatedMatch = $matchCreated.id;
+$: if($matchDestroyed?.destroyed) {
+    if($matchDestroyed.destroyed === true) {
         counter++;
     }
 }
@@ -69,7 +69,7 @@ $: if($matchCreated?.id) {
                     {/if}
                 </div>
                 <div class="name-cont">
-                    <h1>{$board0[1]}</h1>
+                    <h1 style="font-size: 2.5em;">{$board0[1]}</h1>
                 </div>
                 <div class="score0" style="background-color: #{$board0[0]}">
                     {#if $scores?.score0}
@@ -127,7 +127,7 @@ $: if($matchCreated?.id) {
                     {/if}
                 </div>
                 <div class="name-cont">                
-                    <h1>{$board1[1]}</h1>
+                    <h1 style="font-size: 2.5em;">{$board1[1]}</h1>
                 </div> 
                 <div class="logo-cont">
                     {#if logo1}
@@ -193,6 +193,10 @@ $: if($matchCreated?.id) {
         height: 100px;
         max-height: 100px;
         border: 1px solid black;
+    }
+    .name-cont {
+        overflow-wrap: break-word;
+        width: 60%;
     }
     .timer {
         display: flex;

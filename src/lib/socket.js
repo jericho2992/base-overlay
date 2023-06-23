@@ -18,9 +18,7 @@ export const socketMessageStore = writable({
 
 socket.onmessage = ({ data }) => {
     const parsed = JSON.parse(data);
-    console.log(parsed);
-  
-    
+    console.log(parsed);    
     
     socketMessageStore.set(parsed);
 };
