@@ -98,7 +98,7 @@ export const demo = derived(statEvent, ($stat, set) => {
         killed: boomed});
         setTimeout(() => {
             set({});
-        }, 1000);
+        }, 3000);
     }
 });
 
@@ -110,7 +110,7 @@ export const shot = derived(statEvent, ($stat, set) => {
         set({shooter: shooter});
         setTimeout(()=>{
             set({});
-        }, 1000);
+        }, 3000);
     }
 });
 
@@ -122,7 +122,7 @@ export const save = derived(statEvent, ($stat, set) => {
         set({keeper: keeper});
         setTimeout(()=>{
             set({});
-        }, 1000);
+        }, 3000);
     }
 });
 
@@ -136,7 +136,7 @@ export const assist = derived(statEvent, ($stat, set) => {
         name: name});
         setTimeout(()=>{
             set({});
-        }, 1000);
+        }, 3000);
     }
 });
 
