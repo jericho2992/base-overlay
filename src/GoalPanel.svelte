@@ -7,7 +7,7 @@
 <div class="main">
     <h1>Goal: <span>{scorer}</span></h1>
     <h2>Assist: <span>{assist}</span></h2>
-    <h3>{speed} kph</h3>
+    <h2>{speed} kph</h2>
 </div>
 <style>
     .main {

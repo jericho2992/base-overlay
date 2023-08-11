@@ -36,11 +36,8 @@
   }
 
   let lastReportedMatch = 0;
-  $: if($gameEnd?.match != 0) {
-    if($gameEnd.match != lastReportedMatch) {
-      lastReportedMatch = $gameEnd.match;
-      stat=true;
-    }
+  $: if($gameEnd?.over === true) {
+    stat=true;
   }
 
   let lastCreatedMatch = 0;

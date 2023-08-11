@@ -49,7 +49,8 @@ export const gameEnd = derived(socketMessageStore, ($msg, set) => {
         const winner = $msg.data.winner_team_num;
         const id = $msg.data.match_guid;
         set({winner: winner,
-        match: id});
+        match: id,
+        over: true});
     } else {
         set({winner: "",
     match: 0});

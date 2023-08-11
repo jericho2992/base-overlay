@@ -26,10 +26,8 @@
         g=false;
     });
     
-$: if($gameEnd?.match != 0) {
+$: if($gameEnd?.over === true) {
     if(seriesLength>0) {
-        if(lastReportedMatch!=$gameEnd.match) {
-            lastReportedWinner = $gameEnd.winner;
             if($gameEnd.winner === 0) {
                 for(let i=0; i<team0Games.length; i++) {
                     if(!team0Games[i]) {
@@ -46,7 +44,6 @@ $: if($gameEnd?.match != 0) {
                 }
             }
             lastReportedMatch = $gameEnd.match;
-        }
     }   
 }
 
@@ -195,7 +192,8 @@ $: if($matchDestroyed?.destroyed) {
         border: 1px solid black;
     }
     .name-cont {
-        overflow-wrap: break-word;
+        overflow-wrap: normal;
+        word-break: break-word;
         width: 60%;
     }
     .timer {
