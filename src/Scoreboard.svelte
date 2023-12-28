@@ -270,7 +270,7 @@ $: if($matchDestroyed?.destroyed) {
     .team1-games {
         height: 20px;
         display: flex;
-        flex-direction: row;
+        flex-direction: row-reverse;
         flex-wrap: nowrap;
         justify-content: space-around;
         align-items: center;
