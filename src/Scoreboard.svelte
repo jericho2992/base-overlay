@@ -55,11 +55,56 @@ $: if($matchDestroyed?.destroyed) {
 
     $:minutes = Math.floor($timer/60);
     $:seconds = $timer%60;
+
+    function addGames0() {
+        let i=0;
+        while(team0Games[i]){
+            i++;
+        } 
+        team0Games[i]=true;
+    }
+
+    function removeGames0() {
+        let i=0;
+        do {
+            i++;
+        } while(team0Games[i])
+        team0Games[i-1]=false;
+    }
+
+    function addGames1() {
+        let i=0;
+        while(team1Games[i]){
+            i++;
+        } 
+        team1Games[i]=true;
+    }
+
+    function removeGames1() {
+        let i=0;
+        do {
+            i++;
+        } while(team1Games[i])
+        team1Games[i-1]=false;
+    }
+
+    function addSeriesTracker() {
+        if(seriesLength > 0) {
+            counter++;
+        }
+    } 
+
+    function removeSeriestTracker() {
+        if(seriesLength > 0) {
+            counter--;
+        }
+    }
+
 </script>
 <div class="main">
     <div class="left">
         {#if $board0?.length===2 && $board0[0] && $board0[1]}
-            <div class="name-logo" transition:fly={{y:-100, duration:500}} style="background-image: linear-gradient(#{$board0[0]}, white); padding-right: 0;">
+            <div class="name-logo" transition:fly={{y:-100, duration:500}} style="background-image: radial-gradient(#{$board0[0]}, black); padding-right: 0;">
                 <div class="logo-cont">
                     {#if logo1}
                         <img src="{logo1}" alt="team 1 logo">
@@ -76,7 +121,7 @@ $: if($matchDestroyed?.destroyed) {
                     {/if}
                 </div>                       
             </div>
-            <div class="team0-games">
+            <div class="team0-games" on:click={addGames0} on:contextmenu={removeGames0}>
                 {#each team0Games as g}
                     {#if g}
                         <div style="min-width: 50px; height: 15px; min-height: 15px; border: 2px black solid; border-radius: 15px; background-color: #{$board0[0]}"></div>
@@ -106,7 +151,7 @@ $: if($matchDestroyed?.destroyed) {
                     <h1>5:00</h1>
                 {/if}
             </div>
-            <div class="series-tracker">
+            <div class="series-tracker" on:click={addSeriesTracker} on:contextmenu={removeSeriestTracker}>
                 {#if seriesLength > 0}
                     <p style="padding:0; margin: 0;"> Game {counter} of {seriesLength}</p>
                 {/if}
@@ -115,7 +160,7 @@ $: if($matchDestroyed?.destroyed) {
     </div>
     <div class="right">
         {#if $board1?.length===2 && $board1[0] && $board1[1]}
-            <div class="name-logo" transition:fly={{y:-100, duration:500}} style="background-image: linear-gradient(#{$board1[0]}, white); padding-left: 0;">
+            <div class="name-logo" transition:fly={{y:-100, duration:500}} style="background-image: radial-gradient(#{$board1[0]}, black); padding-left: 0;">
                 <div class="score1" style="background-color: #{$board1[0]}">
                     {#if $scores?.score1}
                         <h1>{$scores.score1}</h1>
@@ -132,7 +177,7 @@ $: if($matchDestroyed?.destroyed) {
                     {/if}
                 </div>
             </div>
-            <div class="team1-games">
+            <div class="team1-games" on:click={addGames1} on:contextmenu={removeGames1}>
                 {#each team1Games as g}
                     {#if g}
                         <div style="min-width: 50px; height: 15px; min-height: 15px; border: 2px black solid; border-radius: 15px; background-color: #{$board1[0]}"></div>
@@ -161,6 +206,7 @@ $: if($matchDestroyed?.destroyed) {
         flex-direction: row;
         justify-content: center;
         align-items: flex-start;
+        clip-path: polygon(5% 0%, 95% 0%, 100% 20%, 100% 95%, 100% 100%, 0% 100%, 0% 100%, 0% 20%);
     }
     .left {
         display: flex;
@@ -219,7 +265,7 @@ $: if($matchDestroyed?.destroyed) {
         justify-content: space-around;
         align-items: center;
         border: 1px solid black;
-        background: white;
+        background: rgb(60, 60, 60);
     }
     .team1-games {
         height: 20px;
@@ -229,7 +275,7 @@ $: if($matchDestroyed?.destroyed) {
         justify-content: space-around;
         align-items: center;
         border: 1px solid black;
-        background: white;
+        background: rgb(60, 60, 60);
     }
     .score0 {
         height: 100%;
