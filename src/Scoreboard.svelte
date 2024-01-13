@@ -100,6 +100,20 @@ $: if($matchDestroyed?.destroyed) {
         }
     }
 
+    let lFont = 100;
+    let lNameWidth;
+    let lParent;
+    $: if(lNameWidth >= lParent) {
+        lFont= lFont-1;
+    }
+
+    let rFont = 100;
+    let rNameWidth;
+    let rParent;
+    $: if(rNameWidth >= rParent) {
+        rFont = rFont-1;
+    }
+
 </script>
 <div class="main">
     <div class="left">
@@ -110,8 +124,8 @@ $: if($matchDestroyed?.destroyed) {
                         <img src="{logo1}" alt="team 1 logo">
                     {/if}
                 </div>
-                <div class="name-cont">
-                    <h1 style="font-size: 2.5em;">{$board0[1]}</h1>
+                <div class="name-cont" bind:clientWidth={lParent}>
+                    <h1 style="font-size: {lFont}px;" bind:clientWidth={lNameWidth}>{$board0[1]}</h1>
                 </div>
                 <div class="score0" style="background-color: #{$board0[0]}">
                     {#if $scores?.score0}
@@ -121,6 +135,7 @@ $: if($matchDestroyed?.destroyed) {
                     {/if}
                 </div>                       
             </div>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div class="team0-games" on:click={addGames0} on:contextmenu={removeGames0}>
                 {#each team0Games as g}
                     {#if g}
@@ -151,6 +166,7 @@ $: if($matchDestroyed?.destroyed) {
                     <h1>5:00</h1>
                 {/if}
             </div>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div class="series-tracker" on:click={addSeriesTracker} on:contextmenu={removeSeriestTracker}>
                 {#if seriesLength > 0}
                     <p style="padding:0; margin: 0;"> Game {counter} of {seriesLength}</p>
@@ -168,8 +184,8 @@ $: if($matchDestroyed?.destroyed) {
                         <h1>0</h1>
                     {/if}
                 </div>
-                <div class="name-cont">                
-                    <h1 style="font-size: 2.5em;">{$board1[1]}</h1>
+                <div class="name-cont" bind:clientWidth={rParent}>                
+                    <h1 style="font-size: {rFont}px;" bind:clientWidth={rNameWidth}>{$board1[1]}</h1>
                 </div> 
                 <div class="logo-cont">
                     {#if logo1}
@@ -177,6 +193,7 @@ $: if($matchDestroyed?.destroyed) {
                     {/if}
                 </div>
             </div>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div class="team1-games" on:click={addGames1} on:contextmenu={removeGames1}>
                 {#each team1Games as g}
                     {#if g}
@@ -198,8 +215,9 @@ $: if($matchDestroyed?.destroyed) {
     }
     h1 {
         margin: 0;
-        -webkit-text-stroke-width: 1px;
-        -webkit-text-stroke-color: white;
+        -webkit-text-stroke-width: 2px;
+        -webkit-text-stroke-color: black;
+        color: white;
     }
     .main {
         display: flex;
@@ -238,9 +256,15 @@ $: if($matchDestroyed?.destroyed) {
         border: 1px solid black;
     }
     .name-cont {
-        overflow-wrap: normal;
-        word-break: break-word;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
         width: 60%;
+        text-wrap: nowrap;
+        white-space: nowrap;
     }
     .timer {
         display: flex;
