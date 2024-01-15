@@ -114,6 +114,13 @@ $: if($matchDestroyed?.destroyed) {
         rFont = rFont-1;
     }
 
+    let nameFont;
+    $: if(lNameWidth < lParent && rNameWidth < rParent) {
+        nameFont = Math.min(lFont, rFont);
+        lFont = nameFont;
+        rFont = nameFont;
+    }
+
 </script>
 <div class="main">
     <div class="left">
