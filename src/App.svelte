@@ -1,6 +1,6 @@
 <script>
   import { socket } from "./lib/socket.js";  
-  import { targetPlayer, gameEnd, matchCreated, goal, assist, replayEnd, matchDestroyed } from "./lib/processor.js";
+  import { targetPlayer, gameEnd, matchCreated, goal, assist, replayEnd, matchDestroyed, team0, team1 } from "./lib/processor.js";
   import { fade, fly } from "svelte/transition";
 
   import TeamPanel from "./TeamPanel.svelte";
@@ -37,7 +37,23 @@
 
   let lastReportedMatch = 0;
   $: if($gameEnd?.over === true) {
-    stat=true;
+    let savedStats = "Player,Score,Goals,Shots,Assists,Saves,Demos,Ball_Touches\n"
+    for(let i=0; i<$team0.length; i++) {
+      savedStats = savedStats+`${$team0[i].name},${$team0[i].score},${$team0[i].goals},${$team0[i].shots},${$team0[i].assists},${$team0[i].saves},${$team0[i].demos},${$team0[i].touches}\n`;
+    }
+    for(let i=0; i<$team1.length; i++) {
+      savedStats = savedStats+`${$team1[i].name},${$team1[i].score},${$team1[i].goals},${$team1[i].shots},${$team1[i].assists},${$team1[i].saves},${$team1[i].demos},${$team1[i].touches}\n`;
+    }
+    const fileName = Date.now().toString()
+    const blob = new Blob([savedStats], { type: 'text/csv;charset=utf-8,' })
+    const objUrl = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.setAttribute('href', objUrl)
+    link.setAttribute('download', `${fileName}.csv`)
+    document.querySelector('body').append(link)
+    link.click();
+    document.body.removeChild(link);
+    console.log(savedStats)
   }
 
   let lastCreatedMatch = 0;
@@ -47,6 +63,7 @@
         stat = false;
       }
   }
+
 
   function completeSetup(event) {
     if(!seriesLength) {
